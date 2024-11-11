@@ -1,0 +1,65 @@
+# Node modules
+node_modules/
+ 
+# Environment variables
+.env
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Editor-specific files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Build output
+dist/
+build/
+out/
+
+# Coverage files
+coverage/
+
+# Dependency directories for different tools
+jspm_packages/
+.venv/
+.pnpm-store/
+
+# Optional npm cache directory
+.npm
+
+# Docker
+docker-compose.override.yml
+Dockerfile
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Mac and Linux file attributes
+*.swp
+._*
+
+# Parcel-bundler cache (if using Parcel)
+.cache/
+
+# Svelte cache (if using Svelte)
+.svelte-kit/
+
+# Next.js
+.next/
