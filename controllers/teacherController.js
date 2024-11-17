@@ -126,6 +126,7 @@ async function allCourse(req, res) {
   const teacherId = req.teacherId;
   try {
     const teacher = await getTeacher(teacherId);
+    delete teacher.password;
     const [response] = await connection.execute(
       `select  a.teachesId as 'teachesId', c.subjectId as 'Subject Code', c.name as Subject, b.deptId as 'Dept.', b.degree as Degree , b.sem as Semester, a.section as Section, a.groupId as 'Group' from teaches as a join include as b on a.includeId = b.includeId join subject as c on b.subjectId = c.subjectId where a.teacherId = ?`,
       [teacherId]

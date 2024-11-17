@@ -53,7 +53,7 @@ async function loginStudent(req, res) {
               httpOnly: true,
               secure: true,
               maxAge: 1000 * 60 * 60 * 24,
-              sameSite: "strict",
+              sameSite: "none",
             });
             res.status(204).send();
           } else {
@@ -128,6 +128,7 @@ async function detail(req, res) {
   const studentId = req.studentId;
   try {
     let student = await getStudent(studentId);
+    delete student.password;
     res.status(200).send(student);
   } catch (error) {
     console.log(error);
@@ -141,6 +142,7 @@ async function register(req, res) {
   const studentId = req.studentId;
   try {
     const student = await getStudent(studentId);
+    delete student.password;
     if (student.disContinue)
       res.status(200).send({
         message: "You have discontinued the course!",
