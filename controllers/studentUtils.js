@@ -43,9 +43,9 @@ function logout(res) {
   res.cookie("token", null, {
     path: "/",
     httpOnly: true,
-    secure: false,
+    secure: true,
     maxAge: -20,
-    sameSite: "strict",
+    sameSite: "none",
   });
   return res;
 }

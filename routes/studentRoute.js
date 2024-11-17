@@ -9,10 +9,13 @@ import {
   notice,
   check,
   evaluation,
+  attendance,
   courseResult,
   subjectEvaluation,
   requestUpdate,
-} from "../controllers/studentcontroller.js";
+  subjectAttendance,
+} from "../controllers/studentController.js";
+
 import authStudent from "../middleware/authStudent.js";
 
 const studentRouter = express.Router();
@@ -49,10 +52,16 @@ studentRouter.get("/evaluation", evaluation);
 //courseResult
 studentRouter.post("/courseResult", courseResult);
 
-//subjectResult
-studentRouter.post("/subjectEvaluation", subjectEvaluation);
+//subjectEvaluation
+studentRouter.get("/evaluation/subject", subjectEvaluation);
 
 //requestUpdate
 studentRouter.post("/requestUpdate", requestUpdate);
+
+//attendance
+studentRouter.get("/attendance",attendance);
+
+//subjectAttendance
+studentRouter.get("/attendance/subject", subjectAttendance);
 
 export default studentRouter;

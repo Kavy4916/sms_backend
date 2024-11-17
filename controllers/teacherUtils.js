@@ -1,4 +1,8 @@
 import connection from "../api/dbConnection.js";
+import jwt from "jsonwebtoken";
+import "dotenv/config";
+
+const SECRET = process.env.SECRET;
 
 function stringForUpdate(field, value) {
     let query = "";
@@ -29,11 +33,46 @@ function stringForUpdate(field, value) {
     res.cookie("token", null, {
       path: "/",
       httpOnly: true,
-      secure: false,
+      secure: true,
       maxAge: -20,
-      sameSite: "strict",
+      sameSite: "none",
     });
     return res;
   }
 
-  export {getTeacher, updateTeacher, logout};
+  async function markAttendance(classId, attendance) {
+    let query = "";
+    for (var i = 0; i < attendance.length; i++) {
+      if (i === attendance.length - 1)
+        query = query + " " + `("${classId}", "${attendance[i]["Student Id"]}", "${attendance[i].Status}")`;
+      else
+        query =
+          query + " " + `("${classId}", "${attendance[i]["Student Id"]}", "${attendance[i].Status}"), `;
+    }
+    await connection.execute(
+      `insert into attendance values ${query}`
+    );
+  }
+
+  async function addMarks(examId, result) {
+    let query = "";
+    for (var i = 0; i < result.length; i++) {
+      if (i === result.length - 1)
+        query = query + " " + `("${examId}", "${result[i]["Student Id"]}", "${result[i].Marks || 0}")`;
+      else
+        query =
+          query + " " + `("${examId}", "${result[i]["Student Id"]}", "${result[i].Marks || 0}"), ` ;
+    }
+    await connection.execute(
+      `insert into mark values ${query}`
+    );
+  }
+
+//to create a token
+const createToken = (teacherId) => {
+  return jwt.sign({ teacherId }, SECRET, {
+    expiresIn: "1d",
+  });
+}; 
+
+  export {getTeacher, updateTeacher, logout, markAttendance, addMarks, createToken};

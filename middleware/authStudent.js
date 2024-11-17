@@ -1,7 +1,9 @@
 import jwt from "jsonwebtoken";
 import cookie from "cookie";
 import { logout } from "../controllers/studentUtils.js";
+import "dotenv/config"
 
+const SECRET = process.env.SECRET;
 
 const authStudent = async (req, res, next) => {
 
@@ -13,7 +15,7 @@ const authStudent = async (req, res, next) => {
     res.status(401).send({ message: "Not Authorised" });
   } else {
     try {
-      const { studentId } = jwt.verify(token, "5EeOrBTP7khfjGZap428zDP2Fp8xk6QV");
+      const { studentId } = jwt.verify(token, SECRET);
       if(!studentId) throw Error("Not Authorised");
       req.studentId = studentId;
       next();
