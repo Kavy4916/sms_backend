@@ -44,10 +44,10 @@ function stringForUpdate(field, value) {
     let query = "";
     for (var i = 0; i < attendance.length; i++) {
       if (i === attendance.length - 1)
-        query = query + " " + `("${classId}", "${attendance[i]["Student Id"]}", "${attendance[i].Status}")`;
+        query = query + " " + `("${classId}", "${attendance[i]["Student Id"]}", "${attendance[i].Status || "A"}")`;
       else
         query =
-          query + " " + `("${classId}", "${attendance[i]["Student Id"]}", "${attendance[i].Status}"), `;
+          query + " " + `("${classId}", "${attendance[i]["Student Id"]}", "${attendance[i].Status || "A"}"), `;
     }
     await connection.execute(
       `insert into attendance values ${query}`
@@ -71,7 +71,7 @@ function stringForUpdate(field, value) {
 //to create a token
 const createToken = (teacherId) => {
   return jwt.sign({ teacherId }, SECRET, {
-    expiresIn: "1d",
+    expiresIn: "1h",
   });
 }; 
 

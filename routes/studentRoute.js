@@ -10,7 +10,7 @@ import {
   check,
   evaluation,
   attendance,
-  courseResult,
+  result,
   subjectEvaluation,
   requestUpdate,
   subjectAttendance,
@@ -50,7 +50,7 @@ studentRouter.post("/register", acceptRegister);
 studentRouter.get("/evaluation", evaluation);
 
 //courseResult
-studentRouter.post("/courseResult", courseResult);
+studentRouter.post("/result", result);
 
 //subjectEvaluation
 studentRouter.get("/evaluation/subject", subjectEvaluation);

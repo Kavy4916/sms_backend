@@ -20,7 +20,7 @@ const check = (req, res) => {
 //to create a token
 const createToken = (studentId) => {
   return jwt.sign({ studentId }, SECRET, {
-    expiresIn: "1d",
+    expiresIn: "1h",
   });
 };
 
@@ -100,10 +100,9 @@ async function changePassword(req, res) {
         if (match) {
           const hash = bcrypt.hashSync(newPassword, 10);
           await updateStudent(["password", "wrong"], [hash, 0], studentId);
-          res.status(204).send();
+          res.status(201).send({message: "Password updated successfully!"});
         } else {
           if (student.wrong === 2) {
-            const blockedDateTime = new Date().toISOString();
             await updateStudent(["wrong"], [0], studentId);
             res = logout(res);
             res.status(400).send({
@@ -378,7 +377,7 @@ const attendance = async (req, res) => {
 };
 
 //course result
-const courseResult = async (req, res) => {
+const result = async (req, res) => {
   const studentId = req.studentId;
   const { sessionId, courseId } = req.body;
   try {
@@ -539,7 +538,7 @@ export {
   check,
   evaluation,
   attendance,
-  courseResult,
+  result,
   subjectEvaluation,
   subjectAttendance,
   requestUpdate,

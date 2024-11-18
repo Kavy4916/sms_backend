@@ -99,7 +99,7 @@ async function changePassword(req, res) {
         if (match) {
           const hash = bcrypt.hashSync(newPassword, 10);
           await updateTeacher(["password", "wrong"], [hash, 0], teacherId);
-          res.status(200).send({ success: "Password changed successFully!" });
+          res.status(200).send({ success: "Password changed successfully!" });
         } else {
           if (teacher.wrong === 2) {
             await updateTeacher(["wrong"], [0], teacherId);
@@ -588,7 +588,8 @@ const getUpdateExam = async (req, res) => {
         `select studentId as 'Student Id', mark as Marks from mark where examId=?`,
         [examId]
       );
-      res.send({ detail, result: response});
+      const result = response.map(element=>({...element, Update: "Update"}));
+      res.send({ detail, result});
     }
   } catch (error) {
     console.log(error);
@@ -606,7 +607,7 @@ const postUpdateExam = async (req, res) => {
     );
     let detail = response[0];
     if (detail && detail.teacherId === teacherId) {
-      let [response] = await connection.execute(
+      await connection.execute(
         `update exam set date=?, name=?, maxMarks=? where examId=?`,
         [date, name, maxMarks, examId]
       );
